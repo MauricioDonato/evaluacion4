@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, response, HttpResponseRedirect
 from django.shortcuts import render
-from pasteleria.models import Cliente
+from pasteleria.models import Cliente, Comuna
 from django.utils import timezone
 from django.urls import reverse
 import re
@@ -14,8 +14,9 @@ def index(request):
     return render(request, 'pasteleria/index.html',)
 
 def frm_registrar_cli(request):
- 
-   return render(request, 'pasteleria/frm_registrar_cli.html',)
+    comuna = Comuna.objects.all()
+    carrito = {'comuna':comuna}
+    return render(request, 'pasteleria/frm_registrar_cli.html', carrito,)
 
 def registrar_cliente(request):
     error = 'Error en el ingreso del'
@@ -32,7 +33,8 @@ def registrar_cliente(request):
     apellido = request.POST['apellido'] 
     apellido = apellido.replace(' ','')
     fecha = request.POST['Fecha_nacimiento']  
-   
+    dirrecion = request.POST['dirrecion']
+    comuna = request.POST['comuna']  
     correo= request.POST['correo']    
     correo = correo.replace(' ','')
     contrasena= request.POST['contrasena'] 
@@ -42,7 +44,7 @@ def registrar_cliente(request):
 
     if request.POST['contrasena'] != request.POST['validar_contrasena']:
         return HttpResponse('las contraseñas deben ser iguales')
-    if(fecha =="" or apellido =="" or correo =="" or nombre =="" or contrasena =="" or rut_c ==""):
+    if(fecha =="" or apellido =="" or correo =="" or nombre =="" or contrasena =="" or rut_c =="" or dirrecion=="" or comuna ==""):
         return render(request, 'pasteleria/error_ingreso.html')
     if cantidad < 8:
         return render(request, 'pasteleria/error_ingreso.html')
@@ -64,9 +66,10 @@ def registrar_cliente(request):
         v_error = False
     if v_error == False:
         return render(request,'pasteleria/error_rut.html')
+    com = Comuna.objects.get(id=comuna)
+    
 
-
-    cliente = Cliente(rut=rut_c, nombre_cli=nombre, apellido_cli=apellido, fecha_nac=fecha, correo=correo, contrasena=contrasena, contrasena_val=validar_contrasena)
+    cliente =Cliente(rut= rut_c, nombre_cli=nombre, apellido_cli=apellido, fecha_nac=fecha, correo=correo, direccion=dirrecion, comuna=com, contrasena=contrasena, contrasena_val=validar_contrasena)
     cliente.save()
   
  
@@ -97,8 +100,11 @@ def eliminador_cliente(request):
     return render(request, 'pasteleria/cliente_eliminado.html',)
 def editar_cliente(request):
     editar =  Cliente.objects.get(id= request.POST['id_d'])
-    editar_mostrar ={'editar': editar}
-    return render(request, 'pasteleria/editar_cliente.html',editar_mostrar)
+    comuna = Comuna.objects.all()
+    editar_mostrar ={'editar': editar,'comuna':comuna}
+    
+      
+    return render(request, 'pasteleria/editar_cliente.html',editar_mostrar, )
 def editador_cliente(request):
     e = Cliente.objects.get(id= request.POST['id_editor'])
     rut_c = request.POST['rut_editor']
@@ -110,6 +116,8 @@ def editador_cliente(request):
     fecha = request.POST['Fecha_nacimiento_editor']  
     correo= request.POST['correo_editor']    
     correo = correo.replace(' ','')
+    dirrecion = request.POST['dirrecion']
+    comuna = request.POST['comuna'] 
     contrasena= request.POST['contrasena_editor'] 
     contrasena = contrasena.replace(' ','')   
     validar_contrasena= request.POST['validar_contrasena_editor']
@@ -135,12 +143,15 @@ def editador_cliente(request):
         v_error = False
     if v_error == False:
         return render(request,'pasteleria/error_rut.html')
-
+    com = Comuna.objects.get(id=comuna)
+    
     e.rut = rut_c
     e.nombre_cli = nombre
     e.apellido_cli = apellido
     e.fecha_nac = fecha
     e.correo = correo
+    e.direccion = dirrecion
+    e.comuna = com
     e.contrasena = contrasena
     e.contrasena_val = validar_contrasena
 
