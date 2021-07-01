@@ -178,3 +178,27 @@ def buscar_y_mostrar_comuna(request):
     
     carrito = {'listado':listado} 
     return render(request, 'pasteleria/mostrar_comuna.html',carrito)
+def eliminar_comuna(request):
+    eliminador = Comuna.objects.get(id= request.POST['id_e'])
+    eliminar_mostrar = {'eliminador':eliminador}
+    return render(request, 'pasteleria/eliminar_comuna.html',eliminar_mostrar)
+def eliminador_comuna(request):
+    elim =  Comuna.objects.get(id= request.POST['id_eliminado'])
+    elim.delete()
+    return render(request, 'pasteleria/comuna_eliminado.html',)
+def editar_comuna(request):
+    comuna =  Comuna.objects.get(id= request.POST['id_d'])
+    editar_mostrar ={'comuna':comuna}  
+    return render(request, 'pasteleria/editar_comuna.html',editar_mostrar, )
+
+def editador_comuna(request):
+    
+    e = Comuna.objects.get(id= request.POST['id_editor'])
+    nombre_com = request.POST['nombre_editor']
+    nombre_com = nombre_com.replace(' ','')
+    if(nombre_com ==""):
+        return render(request, 'pasteleria/error_ingreso.html',)  
+    e.nombre_c = nombre_com
+    e.save()
+    return render(request, 'pasteleria/comuna_registrado.html',) 
+   

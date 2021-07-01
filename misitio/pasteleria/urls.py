@@ -17,4 +17,8 @@ urlpatterns = [
     path('registrar_comuna', views.registrar_comuna, name='registrar_comuna'),
     path('frm_buscar_comuna', views.frm_buscar_comuna, name='frm_buscar_comuna'),
     path('buscar_y_mostrar_comuna', views.buscar_y_mostrar_comuna, name='buscar_y_mostrar_comuna'),
+    path('eliminar_comuna', views.eliminar_comuna, name='eliminar_comuna'),
+    path('eliminador_comuna', views.eliminador_comuna, name='eliminador_comuna'),
+    path('editar_comuna', views.editar_comuna, name='editar_comuna'),
+    path('editador_comuna', views.editador_comuna, name='editador_comuna'),
 ]

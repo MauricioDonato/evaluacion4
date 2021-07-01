@@ -8,12 +8,11 @@
         <input type="number" name="id_e" value="{{c.id}}" hidden  >
         <input type="submit" value="Eliminar" >
     </form>
-    <form action="{% url 'pasteleria:editar_cliente' %}" method="POST">
+    <form action="{% url 'pasteleria:editar_comuna' %}" method="POST">
         {% csrf_token %}
         <input type="number" name="id_d" value="{{c.id}}" hidden >
         <input type="submit" value="Editar">
     </form>
-
     {% endfor %}
 </ul>
 {% else %}
