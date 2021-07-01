@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, response, HttpResponseRedirect
 from django.shortcuts import render
-from pasteleria.models import Cliente, Comuna
+from pasteleria.models import Cliente, Comuna, Producto
 from django.utils import timezone
 from django.urls import reverse
 import re
@@ -192,7 +192,6 @@ def editar_comuna(request):
     return render(request, 'pasteleria/editar_comuna.html',editar_mostrar, )
 
 def editador_comuna(request):
-    
     e = Comuna.objects.get(id= request.POST['id_editor'])
     nombre_com = request.POST['nombre_editor']
     nombre_com = nombre_com.replace(' ','')
@@ -201,4 +200,46 @@ def editador_comuna(request):
     e.nombre_c = nombre_com
     e.save()
     return render(request, 'pasteleria/comuna_registrado.html',) 
-   
+
+def frm_producto(request):
+    return render(request, 'pasteleria/frm_producto.html', )
+def registrar_producto(request):
+    nombre_com = request.POST['nombre_producto']
+
+    precio = request.POST['precio_producto']
+    if(nombre_com =="" or precio == 0 ):
+        return render(request, 'pasteleria/error_ingreso.html',)  
+    p = Producto(nombre_pro=nombre_com, precio_pro=precio)
+    p.save()
+    return render(request, 'pasteleria/producto_registrado.html',) 
+def frm_buscar_producto(request):
+    return render(request,'pasteleria/frm_buscar_producto.html')
+def buscar_y_mostrar_producto(request):
+    nombre_p = request.POST['nombre_buscar']
+
+    listado =  Producto.objects.filter(nombre_pro__startswith=nombre_p)   
+    
+    carrito = {'listado':listado} 
+    return render(request, 'pasteleria/mostrar_producto.html',carrito)
+def eliminar_producto(request):
+    eliminador = Producto.objects.get(id= request.POST['id_e'])
+    eliminar_mostrar = {'eliminador':eliminador}
+    return render(request, 'pasteleria/eliminar_producto.html',eliminar_mostrar)    
+def eliminador_producto(request):
+    elim =  Producto.objects.get(id= request.POST['id_eliminado'])
+    elim.delete()
+    return render(request, 'pasteleria/producto_eliminado.html',)
+def editar_producto(request):
+    producto =  Producto.objects.get(id= request.POST['id_d'])
+    editar_mostrar ={'producto':producto}  
+    return render(request, 'pasteleria/editar_producto.html',editar_mostrar, )
+def editador_producto(request):
+    e = Producto.objects.get(id= request.POST['id_editor'])
+    nombre_com = request.POST['nombre_editor']
+    precio_e = request.POST['precio_editor']
+    if(nombre_com =="" or precio_e ==0 ):
+        return render(request, 'pasteleria/error_ingreso.html',)  
+    e.nombre_c = nombre_com
+    e.precio_pro = precio_e
+    e.save()
+    return render(request, 'pasteleria/producto_registrado.html',) 
