@@ -158,4 +158,23 @@ def editador_cliente(request):
     e.save()
     return render(request, 'pasteleria/editar_c.html',)   
 
-  
+def frm_comuna(request):
+    return render(request, 'pasteleria/frm_comuna.html', )
+def registrar_comuna(request):
+    nombre_com = request.POST['nombre_comuna']
+    nombre_com = nombre_com.replace(' ','')
+    if(nombre_com ==""):
+        return render(request, 'pasteleria/error_ingreso.html',)  
+    comuna = Comuna(nombre_c=nombre_com)
+    comuna.save()
+    return render(request, 'pasteleria/comuna_registrado.html',) 
+
+def frm_buscar_comuna(request):
+    return render(request,'pasteleria/frm_buscar_comuna.html')
+def buscar_y_mostrar_comuna(request):
+    nombre_c = request.POST['nombre_buscar']
+
+    listado =  Comuna.objects.filter(nombre_c__startswith=nombre_c)   
+    
+    carrito = {'listado':listado} 
+    return render(request, 'pasteleria/mostrar_comuna.html',carrito)

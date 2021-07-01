@@ -12,5 +12,9 @@ urlpatterns = [
     path('eliminar_cliente', views.eliminar_cliente, name='eliminar_cliente'),
     path('eliminador_cliente', views.eliminador_cliente, name='eliminador_cliente'),
     path('editar_cliente', views.editar_cliente, name='editar_cliente'),
-    path('editador_cliente', views.editador_cliente, name='editador_cliente')
+    path('editador_cliente', views.editador_cliente, name='editador_cliente'),
+    path('frm_comuna', views.frm_comuna, name='frm_comuna'),
+    path('registrar_comuna', views.registrar_comuna, name='registrar_comuna'),
+    path('frm_buscar_comuna', views.frm_buscar_comuna, name='frm_buscar_comuna'),
+    path('buscar_y_mostrar_comuna', views.buscar_y_mostrar_comuna, name='buscar_y_mostrar_comuna'),
 ]

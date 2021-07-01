@@ -1,6 +1,12 @@
 from django.db import models
 from django.db.models.base import Model
 # Create your models here.
+class Producto(models.Model):
+    nombre_pro =  models.CharField(max_length=50,default='')
+    precio_pro = models.IntegerField(default=0)
+    def __str__(self):
+        return self.nombre_pro
+
 class Comuna(models.Model):
     nombre_c =  models.CharField(max_length=50,default='')
     def __str__(self):
