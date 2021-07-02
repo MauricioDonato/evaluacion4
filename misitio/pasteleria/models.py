@@ -24,3 +24,4 @@ class Cliente(models.Model):
     contrasena_val = models.CharField(max_length=50)
     def __str__(self):
         return self.rut
+
