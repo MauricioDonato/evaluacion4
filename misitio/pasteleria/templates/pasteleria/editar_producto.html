@@ -30,22 +30,34 @@
                     </li>
 
 
-                    </li>
+                    </li> 
                 </ul>
             </div>
     </nav>
 </div>
-
+<div class="container col-sm-7 mt-2 frm_comuna">
+    <h1 class="centrar">Editar producto</h1>
 <form action="{% url 'pasteleria:editador_producto' %}" method="post">
     {% csrf_token %}
+    <div class="row mover_I_25">
     <input type="text" name="id_editor" value="{{producto.id}}" hidden>
+    <h5 class="col-sm-2 mt-1">Producto:</h5>
+    <input type="text" class="col-sm-4 form-control" name="nombre_editor" value="{{producto.nombre_pro}}" >
+    </div>
+    <div class="row mover_I_25">
+        <h5 class="col-sm-2 mt-1">Precio:</h5>
+    <input type="text" class="col-sm-4 form-control"  name="precio_editor" value="{{producto.precio_pro}}">
     <br>
-    <input type="text" name="nombre_editor" value="{{producto.nombre_pro}}" >
-    <br>
-    <input type="text" name="precio_editor" value="{{producto.precio_pro}}">
-    <br>
+    </div>
 
-    <input type="submit" value="editar">
+    <input type="submit"   class="btn btn-primary boton_com" value="editar">
 </form>
-<a href="{% url 'pasteleria:index' %}">volver a pagina inicial</a>
-<a href="{% url 'pasteleria:frm_buscar_comuna' %}">volver al buscador</a>
+</div>
+<div class="boton_com row" style="margin-left: 20%;">
+<div class="  btn btn-primary col-sm-4">
+<a class=" color_letra" href="{% url 'pasteleria:index' %}">volver a pagina inicial</a>
+</div>
+<div class="  col-sm-1 "> </div>
+<div class="  btn btn-primary col-sm-4 ">
+<a class=" color_letra" href="{% url 'pasteleria:frm_buscar_comuna' %}">volver al buscador</a></div>
+</div>
